@@ -1,0 +1,34 @@
+{
+    "name": "popcorn-time-backend",
+    "version": "0.0.1",
+    "homepage": "https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt",
+    "authors": [
+        "blackat <blackat@somewhere.world>"
+    ],
+    "description": "A web application based on node, express, mongodb and grunt task runner with bower dependencies manager",
+    "moduleType": [
+        "node"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "app/bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": ">=1.2.*",
+        "angular-resource": ">=1.2.*",
+        "angular-route": ">=1.2.*",
+        "bootstrap": ">=3.2.*",
+        "less.js": ">=1.7.*",
+        "fontawesome": ">=4.2.x",
+        "angular-xeditable": ">=0.1.x",
+        "angular-mocks": ">=1.2.*"
+
+    },
+    "devDependencies": {
+
+    }
+}

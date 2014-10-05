@@ -15,7 +15,7 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         express: {
             options: {
-                port: process.env.PORT || 9000
+                port: process.env.PORT || 9001
             },
             dev: {
                 options: {
@@ -31,14 +31,26 @@ module.exports = function (grunt) {
             server: {
                 url: 'http://localhost:<%= express.options.port %>'
             }
+        },
+        // Download and inject Bower components into the app
+        wiredep: {
+            target: {
+                src: 'app/views/**/*.html',
+                options: {
+                    cwd: '',
+                    dependencies: true,
+                    devDependencies: false,
+                    exclude: ['app/bower_components/bootstrap/dist/js/bootstrap.js']
+                }
+            }
         }
     });
 
 
-    // load grunt plugins and tasks
+// load grunt plugins and tasks
 
-    // custom tasks
-    grunt.registerTask('express-keepalive', 'keep grunt running', function(){
+// custom tasks
+    grunt.registerTask('express-keepalive', 'keep grunt running', function () {
         this.async();
     });
 
@@ -48,6 +60,7 @@ module.exports = function (grunt) {
         }
 
         grunt.task.run([
+            'wiredep',
             'express:dev',
             'open',
             'express-keepalive'
