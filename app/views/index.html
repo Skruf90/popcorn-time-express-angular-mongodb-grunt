@@ -42,7 +42,11 @@
                     <tr ng-repeat="movie in movies">
                         <td><img src="../images/play.png" /></td>
                         <td>{{movie.title}}</td>
-                        <td>{{movie.actors}}</td>
+                        <td>
+                            <span ng-repeat="actor in movie.actors">
+                                {{$last ? actor : actor + ','}}
+                            </span>
+                        </td>
                         <td>{{movie.director}}</td>
                         <td>{{movie.year}}</td>
                     </tr>
@@ -60,6 +64,10 @@
                     <td style="width:20%"></td>
                 </tr>
                 <tr ng-repeat="movie in movies">
+                    <td style="display:none">
+                <span editable-text="movie._id" e-name="id" e-form="rowform"
+                      e-required />
+                    </td>
                     <td>
                 <span editable-text="movie.title" e-name="title" e-form="rowform"
                       e-required>
@@ -68,7 +76,9 @@
                     </td>
                     <td>
                 <span editable-text="movie.actors" e-name="actors" e-form="rowform">
-              {{ movie.actors || 'empty' }}
+                    <span ng-repeat="actor in movie.actors">
+                        {{$last ? actor : actor + ','}}
+                    </span>
             </span>
                     </td>
                     <td>
@@ -82,7 +92,7 @@
             </span>
                     </td>
                     <td style="white-space: nowrap">
-                        <form editable-form name="rowform" onbeforesave="saveUser($data, movie.id)"
+                        <form editable-form name="rowform" onbeforesave="saveMovie($data, movie._id)"
                               ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == movie">
                             <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                                 save
