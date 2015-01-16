@@ -1,9 +1,7 @@
 'use strict';
 
-var  movieServices = angular.module('movieServices', ['ngResource']);
+var movieServices = angular.module('movieApp.services', ['ngResource']);
 
-movieServices.factory('movie', ['$resource', function($resource){
-    return $resource('movies/:movieId.json', {}, {
-        query: {method:'GET', params:{movieId:'movies'}, isArray:true}
-    });
-}]);
+movieServices.factory('Movie', function ($resource) {
+    return $resource('movies/:id', {id: '@_id'});
+});

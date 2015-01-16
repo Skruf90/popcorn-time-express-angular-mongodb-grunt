@@ -1,6 +1,6 @@
 'use strict';
 
-var movieApp = angular.module('movieApp', ['xeditable']);
+var movieApp = angular.module('movieApp', ['xeditable', 'movieApp.services']);
 
 movieApp.controller('MainController', function($scope){
 
@@ -20,15 +20,17 @@ movieApp.controller('MainController', function($scope){
     };
 });
 
-movieApp.controller('MovieController', function($scope, $http) {
+movieApp.controller('MovieController', function($scope, $http, Movie) {
 
-    $scope.loadMovies = function() {
-        return $http.get("/movies").success(function(response){
-            $scope.movies = response;
-        });
+    $scope.loadMovies = function(){
+        return $scope.movies = Movie.query();
     };
 
-    $scope.saveMovie = function(data, id) {
-        return $http.post("/movie/" + id);
+    $scope.deleteMovie = function(id){
+        return Movie.delete({id: id});
+    };
+
+    $scope.updateMovie = function(data, id) {
+        return $http.put("/movies/" + id, data);
     }
 });

@@ -5,116 +5,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Movie page</title>
     <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="../bower_components/angular-xeditable/dist/css/xeditable.css" />
     <!-- endbower -->
     <link href="/styles/style.less" rel="stylesheet/less">
 </head>
 <body ng-controller="MainController">
 
-    <div class="cob-header">
-        <div id="cob-app-name">
-            <h1>{{appName}}</h1>
-        </div>
-        <img src="/images/popcorn.png">
+<div class="cob-header">
+    <div id="cob-app-name">
+        <h1>{{appName}}</h1>
     </div>
+    <img src="/images/popcorn.png">
+</div>
 
-    <div id="cob-navigation" class="container">
-        <ul>
-            <li>
-                <a href="#" ng-click="showMovies()"><i class="fa fa-film"></i> movies</a>
-            </li>
-            <li>
-                <a href="#" ng-click="showAdmin()"><i class="fa fa-cog"></i> admin</a>
-            </li>
-        </ul>
-    </div>
+<div id="cob-navigation" class="container">
+    <ul>
+        <li>
+            <a href="#" ng-click="showMovies()"><i class="fa fa-film"></i> movies</a>
+        </li>
+        <li>
+            <a href="#" ng-click="showAdmin()"><i class="fa fa-cog"></i> admin</a>
+        </li>
+    </ul>
+</div>
 
-    <div  class="container" ng-controller="MovieController">
-        <div ng-show="sMovies">
-            <div class="cob-movie-list" ng-init="loadMovies()">
-                <table class="table table-hover">
-                    <tr style="font-weight: bold">
-                        <td style="width:10%"></td>
-                        <td style="width:15%">Title</td>
-                        <td style="width:40%">Actors</td>
-                        <td style="width:15%">Director</td>
-                        <td style="width:10%">Year</td>
-                    </tr>
-                    <tr ng-repeat="movie in movies">
-                        <td><img src="../images/play.png" /></td>
-                        <td>{{movie.title}}</td>
-                        <td>
-                            <span ng-repeat="actor in movie.actors">
-                                {{$last ? actor : actor + ','}}
-                            </span>
-                        </td>
-                        <td>{{movie.director}}</td>
-                        <td>{{movie.year}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div ng-show="sAdmin" ng-init="loadMovies()" >
-            <table class="table table-bordered table-hover table-condensed">
+<div class="container" ng-controller="MovieController">
+    <div ng-show="sMovies">
+        <div class="cob-movie-list" ng-init="loadMovies()">
+            <table class="table table-hover">
                 <tr style="font-weight: bold">
+                    <td style="width:10%"></td>
                     <td style="width:15%">Title</td>
                     <td style="width:40%">Actors</td>
                     <td style="width:15%">Director</td>
                     <td style="width:10%">Year</td>
-                    <td style="width:20%"></td>
                 </tr>
                 <tr ng-repeat="movie in movies">
-                    <td style="display:none">
-                <span editable-text="movie._id" e-name="id" e-form="rowform"
-                      e-required />
-                    </td>
-                    <td>
+                    <td><img src="../images/play.png"/></td>
+                    <td>{{movie.title}}</td>
+                    <td>{{movie.actors}}</td>
+                    <td>{{movie.director}}</td>
+                    <td>{{movie.year}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div ng-show="sAdmin" ng-init="loadMovies()">
+        <table class="table table-bordered table-hover table-condensed">
+            <tr style="font-weight: bold">
+                <td style="width:15%">Title</td>
+                <td style="width:40%">Actors</td>
+                <td style="width:15%">Director</td>
+                <td style="width:10%">Year</td>
+                <td style="width:20%"></td>
+            </tr>
+            <tr ng-repeat="movie in movies">
+                <td>
                 <span editable-text="movie.title" e-name="title" e-form="rowform"
                       e-required>
-              {{ movie.title || 'empty' }}
-            </span>
-                    </td>
-                    <td>
+                    {{ movie.title || 'empty' }}
+                </span>
+                </td>
+                <td>
                 <span editable-text="movie.actors" e-name="actors" e-form="rowform">
-                    <span ng-repeat="actor in movie.actors">
-                        {{$last ? actor : actor + ','}}
-                    </span>
+                    {{movie.actors}}
             </span>
-                    </td>
-                    <td>
+                </td>
+                <td>
                 <span editable-text="movie.director" e-name="director" e-form="rowform">
               {{ movie.director || 'empty' }}
             </span>
-                    </td>
-                    <td>
+                </td>
+                <td>
                 <span editable-text="movie.year" e-name="year" e-form="rowform">
               {{ movie.year || 'empty' }}
             </span>
-                    </td>
-                    <td style="white-space: nowrap">
-                        <form editable-form name="rowform" onbeforesave="saveMovie($data, movie._id)"
-                              ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == movie">
-                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
-                                save
-                            </button>
-                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
-                                    class="btn btn-default">
-                                cancel
-                            </button>
-                        </form>
-                        <div class="buttons" ng-show="!rowform.$visible">
-                            <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
-                            <button class="btn btn-danger" ng-click="removeMovie($index)">del</button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                </td>
+                <td style="white-space: nowrap">
+                    <!-- form -->
+                    <form editable-form name="rowform" onbeforesave="updateMovie($data, movie._id)"
+                          ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == movie">
+                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                            save
+                        </button>
+                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
+                                class="btn btn-default">
+                            cancel
+                        </button>
+                    </form>
+                    <div class="buttons" ng-show="!rowform.$visible">
+                        <button class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                        <button class="btn btn-danger" ng-click="deleteMovie(movie._id)">del</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
-            <button class="btn btn-default" ng-click="addMovie()">Add row</button>
-        </div>
+        <button class="btn btn-default" ng-click="addMovie()">Add row</button>
     </div>
+</div>
 </body>
 <!-- bower:js -->
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-resource/angular-resource.js"></script>
+<script src="../bower_components/angular-route/angular-route.js"></script>
+<script src="../bower_components/less.js/dist/less-1.7.5.js"></script>
+<script src="../bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+<script src="../bower_components/angular-mocks/angular-mocks.js"></script>
 <!-- endbower -->
 <script src="scripts/services/services.js"></script>
 <script src="scripts/controllers/controllers.js"></script>
