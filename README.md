@@ -1,4 +1,4 @@
-Popcorn Time: Express angular and mongodb
+Popcorn Time: Express AngularJS and MongoDB
 ==========================================
 A simple work in progress project to test how to build a fullstack web application in JavaScript using Express, AngulaJS, MongoDB and Grunt.
 
